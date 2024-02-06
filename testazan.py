@@ -1,17 +1,15 @@
-import time
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 import random
-from telegram import Bot, Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
+import time
 
-# ضع هنا رمز الوصول الخاص ببوتك
-TOKEN = '6870143125:AAGvj2FULB8Vwn1gjeCBa4Aea7uY2j0sLiI'
+TOKEN = '6870143125:AAFP4iGAYL5bFOZ-Pnz5w20AIfMDWupCtew'
 
-# أذكار للإرسال
 azkar_list = [
     "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك المصير.",
     "الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.",
     "اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك فلك الحمد ولك الشكر.",
-    # أذكار إضافية يمكنك إضافتها هنا
+    # Add additional azkar here
 ]
 
 def send_azkar(update: Update, context: CallbackContext) -> None:
@@ -19,7 +17,7 @@ def send_azkar(update: Update, context: CallbackContext) -> None:
     while True:
         azkar = random.choice(azkar_list)
         context.bot.send_message(chat_id=chat_id, text=azkar)
-        time.sleep(1)
+        time.sleep(1)  # أرسل أذكار كل ساعة
 
 def main() -> None:
     updater = Updater(token=TOKEN)
@@ -29,7 +27,7 @@ def main() -> None:
     start_handler = CommandHandler('start', send_azkar)
     dispatcher.add_handler(start_handler)
 
-    # بدء تشغيل البوت
+    # تشغيل البوت
     updater.start_polling()
     updater.idle()
 
